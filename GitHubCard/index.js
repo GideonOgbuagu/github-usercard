@@ -47,53 +47,58 @@ const followersArray = [];
 </div>
 
 */
-function cardsCreator(users) {
+function cardsCreator(
+  avatar_url,
+  name,
+  login,
+  location,
+  html_url,
+  followers,
+  following,
+  bio
+) {
   const card = document.createElement("div"),
     cardImg = document.createElement("img"),
     cardInfo = document.createElement("div"),
-    name = document.createElement("h3"),
+    usersName = document.createElement("h3"),
     username = document.createElement("p"),
-    location = document.createElement("p"),
+    userLocation = document.createElement("p"),
     profile = document.createElement("p"),
     link = document.createElement("a"),
-    followers = document.createElement("p"),
-    following = document.createElement("p"),
-    bio = document.createElement("p");
+    userFollowers = document.createElement("p"),
+    userFollowing = document.createElement("p"),
+    userBio = document.createElement("p");
 
   card.classList.add("card");
-  cardImg.src = users.imgUser;
+  cardImg.src = avatar_url;
   cardInfo.classList.add("class-info");
-  name.classList.add("name");
+  usersName.classList.add("name");
   username.classList.add("username");
-  link.href = users.addressUser;
+  link.href = html_url;
 
-  name.textContent = users.nameUser;
-  username.textContent = users.username;
-  location.textContent = users.locationUser;
-  link.textContent = users.addressUser;
-  followers.textContent = users.followersUser;
-  following.textContent = users.followingUser;
-  bio.textContent = users.bioUser;
+  usersName.textContent = name;
+  username.textContent = login;
+  userLocation.textContent = `Location: ${location}`;
+  link.textContent = avatar_url;
+  userFollowers.textContent = `Followers: ${followers}`;
+  userFollowing.textContent = `Following: ${following}`;
+  userBio.textContent = `Bio: ${bio}`;
 
   card.append(cardImg);
   card.append(cardInfo);
-  cardInfo.append(name);
+  cardInfo.append(usersName);
   cardInfo.append(username);
-  cardInfo.append(location);
+  cardInfo.append(userLocation);
   cardInfo.append(profile);
   profile.append(link);
-  cardInfo.append(followers);
-  cardInfo.append(following);
-  cardInfo.append(bio);
+  cardInfo.append(userFollowers);
+  cardInfo.append(userFollowing);
+  cardInfo.append(userBio);
 
   return card;
 }
 
-const cardContainer = document.querySelector(".card");
-
-// const newComponent = document.createElement("div");
-
-// cards.append();
+const cards = document.querySelector(".cards");
 
 axios.get("https://api.github.com/users/GideonOgbuagu").then(response => {
   //       console.log(response.data.followers_url)
@@ -101,16 +106,32 @@ axios.get("https://api.github.com/users/GideonOgbuagu").then(response => {
     // console.log(response.data);
     response.data.forEach(item => {
       axios.get(item.url).then(response => {
-        // response.data.forEach(follower => {
         console.log(response.data);
-        //   // const cards = cardsCreator()
-        //   // cardContainer.append();
-        // });
+        cards.append(
+          cardsCreator(
+            response.data.avatar_url,
+            response.data.name,
+            response.data.login,
+            response.data.location,
+            response.data.html_url,
+            response.data.followers,
+            response.data.following,
+            response.data.bio
+          )
+        );
       });
     });
   });
 });
 
+// avatar_url,
+//   name,
+//   login,
+//   location,
+//   html_url,
+//   followers,
+//   following,
+//   bio
 // https://api.github.com/users/GideonOgbuagu/followers
 
 // axios.get("https://api.github.com/users/GideonOgbuagu/followers").then(response => {

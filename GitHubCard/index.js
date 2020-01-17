@@ -79,7 +79,8 @@ function cardsCreator(
   usersName.textContent = name;
   username.textContent = login;
   userLocation.textContent = `Location: ${location}`;
-  link.textContent = avatar_url;
+  profile.textContent = `Profile: `;
+  link.textContent = html_url;
   userFollowers.textContent = `Followers: ${followers}`;
   userFollowing.textContent = `Following: ${following}`;
   userBio.textContent = `Bio: ${bio}`;
